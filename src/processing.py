@@ -1,5 +1,4 @@
-from typing import List, Dict
-from typing import Union
+from typing import Dict, List, Union
 
 
 def filter_by_state(
