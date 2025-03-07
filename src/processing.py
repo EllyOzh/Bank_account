@@ -16,12 +16,13 @@ def filter_by_state(
 
 
 def sort_by_date(
-    info_client: List[Dict[str, Union[str, int]]], ascending: bool = False) -> List[Dict[str, Union[str, int]]]:
+    info_client: List[Dict[str, Union[str, int]]], ascending: bool = False
+) -> List[Dict[str, Union[str, int]]]:
     """Функция возвращает новый список, отсортированный по дате."""
     sorted_date_ascending = []
     sorted_date_descending = []
     for dictionary in info_client:
-        if ascending == False:
+        if ascending is False:
             sorted_date_descending = sorted(info_client, key=lambda num: num["date"], reverse=True)
             return sorted_date_descending
         else:
