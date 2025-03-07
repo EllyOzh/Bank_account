@@ -8,25 +8,24 @@ def filter_by_state(
     state соответствует указанному значению."""
 
     new_list_dict = []
-    for i in info_client:
-        for key, value in i.items():
-            if i["state"] == "EXECUTED":
-                new_list_dict.append(i)
+    for element in info_client:
+        for key, value in element.items():
+            if element["state"] == state:
+                new_list_dict.append(element)
     return new_list_dict
 
 
 def sort_by_date(
-    info_client: List[Dict[str, Union[str, int]]], ascending: bool = "True"
-) -> List[Dict[str, Union[str, int]]]:
+    info_client: List[Dict[str, Union[str, int]]], ascending: bool = False) -> List[Dict[str, Union[str, int]]]:
     """Функция возвращает новый список, отсортированный по дате."""
     sorted_date_ascending = []
     sorted_date_descending = []
-    for i in info_client:
-        if ascending is False:
-            sorted_date_descending = sorted(info_client, key=lambda i: i["date"], reverse=True)
+    for dictionary in info_client:
+        if ascending == False:
+            sorted_date_descending = sorted(info_client, key=lambda num: num["date"], reverse=True)
             return sorted_date_descending
         else:
-            sorted_date_ascending = sorted(info_client, key=lambda i: i["date"])
+            sorted_date_ascending = sorted(info_client, key=lambda num: num["date"])
             return sorted_date_ascending
 
 
