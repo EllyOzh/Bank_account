@@ -9,9 +9,8 @@ def filter_by_state(
 
     new_list_dict = []
     for element in info_client:
-        for key, value in element.items():
-            if element["state"] == state:
-                new_list_dict.append(element)
+        if element["state"] == state:
+            new_list_dict.append(element)
     return new_list_dict
 
 
