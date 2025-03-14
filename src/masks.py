@@ -1,16 +1,23 @@
 from typing import Union
 
-
 def get_mask_card_number(card_number: Union[int, str]) -> Union[int, str]:
     """Функция get_mask_card_number принимает на вход номер карты и возвращает ее маску"""
 
-    return f"({card_number[0:4]} {card_number[4:6]}** **** {card_number[-4:]})"
+    if card_number.isdigit():
+        for num in card_number:
+            if len(card_number) == 16:
+                return f"(card_number[0:4] card_number[4:6]** **** card_number[-4:])"
+            elif len(card_number) == 13:
+                return f"(card_number[0:4] card_number[4:5]**** card_number[-4:])"
+            elif len(card_number) == 19:
+                return f"(card_number[0:4] card_number[4:6]** **** *** card_number[-4:])"
+    else:
+        return ""
 
 
 def get_mask_account(account_number: Union[int, str]) -> Union[int, str]:
     """Функция get_mask_account принимает на вход номер счета и возвращает его маску"""
-
-    return f"(**{account_number[-4:]})"
+    return f"(**account_number[-4:])"
 
 
 if __name__ == "__main__":
