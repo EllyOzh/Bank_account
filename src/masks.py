@@ -17,7 +17,15 @@ def get_mask_card_number(card_number: Union[int, str]) -> Union[int, str]:
 
 def get_mask_account(account_number: Union[int, str]) -> Union[int, str]:
     """Функция get_mask_account принимает на вход номер счета и возвращает его маску"""
-    return f"(**account_number[-4:])"
+
+    if account_number.isdigit():
+        for element in account_number:
+            if len(account_number) == 20:
+                return f"(**account_number[-4:])"
+
+    else:
+        return ""
+
 
 
 if __name__ == "__main__":
