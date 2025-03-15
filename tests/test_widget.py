@@ -19,15 +19,10 @@ def test_mask_account_card_error_num():
         mask_account_card([])
 
 @pytest.mark.parametrize('data_info, expected', [
-    ('2024-03-11T02:26:18.671407', '11.03.2024')
+    ('2024-03-11T02:26:18.671407', '11.03.2024'),
+    ('2024-03', 'Введите дату в правильном формате')
     ])
 def test_get_date_ok(data_info, expected):
     assert get_date(data_info) == expected
 
-def test_get_date_error():
-    with pytest.raises(Exception):
-        get_date('2024-02-30:t68:70:25:75.3233')
 
-def test_get_date_error():
-    with pytest.raises(Exception):
-        get_date('  ')
