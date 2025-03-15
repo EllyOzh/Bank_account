@@ -1,27 +1,20 @@
 from typing import Union
 
-def get_mask_card_number(card_number: Union[int, str]) -> Union[int, str]:
+def get_mask_card_number(card_number: Union[int, str]) -> str:
     """Функция get_mask_card_number принимает на вход номер карты и возвращает ее маску"""
 
-    if card_number.isdigit():
-        for num in card_number:
-            if len(card_number) == 16:
-                return f"(card_number[0:4] card_number[4:6]** **** card_number[-4:])"
-            elif len(card_number) == 13:
-                return f"(card_number[0:4] card_number[4:5]**** card_number[-4:])"
-            elif len(card_number) == 19:
-                return f"(card_number[0:4] card_number[4:6]** **** *** card_number[-4:])"
+    number_str = str(card_number)
+    if number_str.isdigit() and len(number_str) == 16:
+        return f"{number_str[0:4]} {number_str[4:6]}** **** {number_str[-4:]}"
     else:
         return ""
 
 
-def get_mask_account(account_number: Union[int, str]) -> Union[int, str]:
+def get_mask_account(account_number: Union[int, str]) -> str:
     """Функция get_mask_account принимает на вход номер счета и возвращает его маску"""
-
-    if account_number.isdigit():
-        for element in account_number:
-            if len(account_number) == 20:
-                return f"(**account_number[-4:])"
+    account_str = str(account_number)
+    if account_str.isdigit() and len(account_str) == 20:
+        return f"**{account_str[-4:]}"
 
     else:
         return ""
