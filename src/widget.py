@@ -6,13 +6,14 @@ from src.masks import get_mask_account, get_mask_card_number
 def mask_account_card(number_card_or_account: str) -> str:
     """Функция, возвращающая замаскированный номер карты или счёта"""
     info_card_or_account = number_card_or_account.split()
+    number = info_card_or_account[-1]
+    title = " ".join(info_card_or_account[:-1])
     # Длина последнего элемента = Количество цифр в номере счета
-    if len(info_card_or_account[-1]) == 20:
-        info_card_or_account[-1] = get_mask_account(info_card_or_account[-1])
-        return " ".join(info_card_or_account)
+    if len(number) == 20:
+        hidden_number = get_mask_account(number)
     else:
-        info_card_or_account[-1] = get_mask_card_number(info_card_or_account[-1])
-        return " ".join(info_card_or_account)
+        hidden_number = get_mask_card_number(number)
+    return f"{title} {hidden_number}"
 
 
 def get_date(info_date: str) -> str:
