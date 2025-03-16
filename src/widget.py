@@ -2,6 +2,7 @@ from black import datetime
 
 from src.masks import get_mask_account, get_mask_card_number
 
+
 def mask_account_card(number_card_or_account: str) -> str:
     """Функция, возвращающая замаскированный номер карты или счёта"""
     info_card_or_account = number_card_or_account.split()

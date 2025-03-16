@@ -1,6 +1,5 @@
-from typing import Dict, List, Union
-
 from datetime import datetime
+from typing import Dict, List, Union
 
 
 def filter_by_state(
