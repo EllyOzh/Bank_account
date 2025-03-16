@@ -21,7 +21,6 @@ def get_mask_account(account_number: Union[int, str]) -> str:
         return ""
 
 
-
 if __name__ == "__main__":
     print(get_mask_card_number("9632587412365478"))
     print(get_mask_account("85479632145879632147"))

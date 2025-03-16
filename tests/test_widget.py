@@ -16,9 +16,11 @@ from src.widget import get_date, mask_account_card
 def test_mask_account_card_ok(card_info, expected):
     assert mask_account_card(card_info) == expected
 
+
 def test_mask_account_card_error_num():
     with pytest.raises(Exception):
         mask_account_card([])
+
 
 @pytest.mark.parametrize('data_info, expected', [
     ('2024-03-11T02:26:18.671407', '11.03.2024'),
@@ -26,5 +28,3 @@ def test_mask_account_card_error_num():
     ])
 def test_get_date_ok(data_info, expected):
     assert get_date(data_info) == expected
-
-

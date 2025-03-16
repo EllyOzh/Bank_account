@@ -1,5 +1,4 @@
 import pytest
-from black import datetime
 
 from src.processing import filter_by_state, sort_by_date
 
@@ -22,6 +21,7 @@ def test_filter_by_state(state, expected):
     result = filter_by_state(sample_data, state)
     assert result == expected
 
+
 @pytest.mark.parametrize("date, expected",
                          [([{"date": "2019-07-03"}, {"date": "2018-06-30"}, {"date": "2018-09-12"}],
                            [{"date": "2019-07-03"}, {"date": "2018-09-12"}, {"date": "2018-06-30"}]),
@@ -29,16 +29,15 @@ def test_filter_by_state(state, expected):
                            [{"date": "2019-07-03"}, {"date": "2019-07-03"}, {"date": "2018-06-30"}]),
                           ([{"date": "2018-09-12"}, {"date": "2018-10-14"}],
                            [{"date": "2018-10-14"}, {"date": "2018-09-12"}])])
-
 def test_sort_by_date(date, expected):
     assert sort_by_date(date) == expected
+
 
 @pytest.fixture
 def not_correct_date():
     return [{"date": "12-03-18"}]
 
+
 def test_correct_date(not_correct_date):
     with pytest.raises(ValueError):
         sort_by_date(not_correct_date)
-
-
