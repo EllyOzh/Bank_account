@@ -19,8 +19,8 @@ def sort_by_date(
     info_client: List[Dict[str, Union[str, int]]], reverse: bool = True
 ) -> List[Dict[str, Union[str, int]]]:
     """Возвращает список, отсортированный по дате"""
-    return sorted(info_client, key=lambda x: datetime.strptime(x["date"], "%Y-%m-%d"), reverse=reverse)
 
+    return sorted(info_client, key=lambda x: datetime.strptime(x["date"], "%Y-%m-%dT%H:%M:%S.%f"), reverse=reverse)
 
 if __name__ == "__main__":
     print(
