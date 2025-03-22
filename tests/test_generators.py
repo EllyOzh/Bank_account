@@ -33,24 +33,26 @@ def test_filter_by_currency_missing_currency():
     assert usd_transactions[0]["id"] == 1
 
 
-def test_filter_by_currency_type_error(params_filter_by_currency_type_error):
-    transactions, currency, expected = params_filter_by_currency_type_error
+def test_filter_by_currency_error(params_filter_by_currency_error):
+    transactions, currency, expected = params_filter_by_currency_error
     with pytest.raises(ValueError) as exc_info:
         filter_by_currency(transactions, currency)
     assert str(exc_info.value) == expected
 
 
-def test_transaction_descriptions_ok(transactions_list):  # тест корректной отработки
+def test_transaction_descriptions_ok(transactions_list):
     generator_ = transaction_descriptions(transactions_list)
-    assert "Перевод организации" == next(generator_)
-    assert "Перевод со счета на счет" == next(generator_)
+    assert next(generator_) == "Перевод организации"
+    assert next(generator_) == "Перевод со счета на счет"
+    assert next(generator_) == "Перевод со счета на счет"
+    assert next(generator_) == "Перевод с карты на карту"
 
 
-def test_transaction_descriptions_not_descriptions(transactions):  # тест при отсутствии 'descriptions'
-    generator_ = transaction_descriptions(transactions)
-
-    assert "" == next(generator_)
-    assert "" == next(generator_)
+def test_transaction_descriptions_error(params_transaction_descriptions_error):
+    transactions, expected = params_transaction_descriptions_error
+    with pytest.raises(ValueError) as exc_info:
+        transaction_descriptions(transactions)
+    assert str(exc_info.value) == expected
 
 
 def test_card_number_generator_ok():  # тест корректной работы генератора

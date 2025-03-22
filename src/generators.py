@@ -71,11 +71,19 @@ def filter_by_currency(transactions: List[Dict], currency: str) -> Iterator[Dict
 def transaction_descriptions(transactions: List[Dict]) -> None:
     """Генератор, - принимает список словарей с транзакциями и
     возвращает описание каждой операции по очереди."""
-    for transaction in transactions:
-        if transaction.get("description"):  # проверка значения по ключу description
-            yield transaction["description"]
-        else:
-            yield ""
+    if not isinstance(transactions, list):
+        raise ValueError("Транзакции обрабатываются в виде списка словарей.")
+    if not all(isinstance(transaction, dict) for transaction in transactions):
+        raise ValueError("Каждая транзакция должна быть словарем.")
+    if not all("description" in transaction for transaction in transactions):
+        raise ValueError("Каждая транзакция должна содержать ключ 'description'.")
+
+    filtered_transactions = (
+        transaction["description"]
+        for transaction in transactions
+        if transaction.get("description")
+    )  # проверка значения по ключу description
+    return filtered_transactions
 
 
 def card_number_generator(low_limit: int, upper_limit: int) -> Iterator[str]:
