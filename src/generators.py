@@ -52,10 +52,20 @@ transactions = [
 def filter_by_currency(transactions: List[Dict], currency: str) -> Iterator[Dict]:
     """Ф-я принимает на вход список словарей c транзакциями, возвращает итератор, который поочередно
     выдает транзакции, где валюта операции соответствует заданной."""
-    for transaction in transactions:
-        if transaction.get("operationAmount", {}).get("currency", {}).get("code") == currency:
-            # значение по ключам
-            yield transaction
+    if not isinstance(transactions, list):
+        raise ValueError("Транзакции обрабатываются в виде списка словарей.")
+    if not isinstance(currency, str):
+        raise ValueError("Данные о валюте должны быть строкой.")
+    if not all(isinstance(transaction, dict) for transaction in transactions):
+        raise ValueError("Каждая транзакция должна быть словарем.")
+    if not currency.strip():
+        raise ValueError("Валюта операции не может быть пустой.")
+
+    filtered_transactions = (
+        transaction
+        for transaction in transactions
+        if transaction.get("operationAmount", {}).get("currency", {}).get("code") == currency)
+    return filtered_transactions
 
 
 def transaction_descriptions(transactions: List[Dict]) -> None:

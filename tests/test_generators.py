@@ -11,9 +11,9 @@ def test_filter_by_currency_ok(transactions):
 
 
 empty_list = []
-
-
 # Проверка, что генератор не завершается ошибкой при обработке пустого списка
+
+
 def test_filter_by_currency_empty():
     usd_transactions = list(filter_by_currency(empty_list, "USD"))
     assert len(usd_transactions) == 0
@@ -31,6 +31,13 @@ def test_filter_by_currency_missing_currency():
     usd_transactions = list(filter_by_currency(transactions_, "USD"))
     assert len(usd_transactions) == 1
     assert usd_transactions[0]["id"] == 1
+
+
+def test_filter_by_currency_type_error(params_filter_by_currency_type_error):
+    transactions, currency, expected = params_filter_by_currency_type_error
+    with pytest.raises(ValueError) as exc_info:
+        filter_by_currency(transactions, currency)
+    assert str(exc_info.value) == expected
 
 
 def test_transaction_descriptions_ok(transactions_list):  # тест корректной отработки

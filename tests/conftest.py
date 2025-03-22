@@ -1,11 +1,9 @@
 import pytest
 
+
 @pytest.fixture
 def not_date():
-    return [
-        {"id": 41428829, "state": "EXECUTED"},
-        {"id": 939719570, "state": "EXECUTED"}
-    ]
+    return [{"id": 41428829, "state": "EXECUTED"}, {"id": 939719570, "state": "EXECUTED"}]
 
 
 @pytest.fixture
@@ -18,7 +16,7 @@ def transactions():
 
 @pytest.fixture
 def transactions_list():
-    return [
+    data = [
         {
             "id": 939719570,
             "state": "EXECUTED",
@@ -73,6 +71,18 @@ def transactions_list():
             "to": "Счет 41421565395219882431",
         },
     ]
+    return data
+
+
+@pytest.fixture(params=[0, 1, 2, 3])
+def params_filter_by_currency_type_error(request, transactions_list):
+    tests_error = [
+        ("", "", "Транзакции обрабатываются в виде списка словарей."),
+        (transactions_list, 1, "Данные о валюте должны быть строкой."),
+        ([[], {}], "", "Каждая транзакция должна быть словарем."),
+        (transactions_list, "", "Валюта операции не может быть пустой."),
+    ]
+    return tests_error[request.param]
 
 
 @pytest.fixture(
