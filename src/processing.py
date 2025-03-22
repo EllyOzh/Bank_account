@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Dict, List, Union
 
 
@@ -16,11 +15,18 @@ def filter_by_state(
 
 
 def sort_by_date(
-    info_client: List[Dict[str, Union[str, int]]], reverse: bool = True
+    info_client: List[Dict[str, Union[str, int]]], ascending: bool = False
 ) -> List[Dict[str, Union[str, int]]]:
-    """Возвращает список, отсортированный по дате"""
+    """Функция возвращает новый список, отсортированный по дате."""
+    for item in info_client:
+        if 'date' not in item:
+            raise ValueError("Нет ключа 'date'")
+    if ascending is False:
+        sorted_date = sorted(info_client, key=lambda num: num["date"], reverse=True)
+    else:
+        sorted_date = sorted(info_client, key=lambda num: num["date"])
+    return sorted_date
 
-    return sorted(info_client, key=lambda x: datetime.strptime(x["date"], "%Y-%m-%dT%H:%M:%S.%f"), reverse=reverse)
 
 if __name__ == "__main__":
     print(

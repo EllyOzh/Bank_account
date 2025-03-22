@@ -22,7 +22,7 @@ def get_date(info_date: str) -> str:
         date_form = datetime.strptime(info_date, "%Y-%m-%dT%H:%M:%S.%f")
         return date_form.strftime("%d.%m.%Y")
     except ValueError:
-        return 'Введите дату в правильном формате'
+        return "Введите дату в правильном формате"
 
 
 if __name__ == "__main__":
