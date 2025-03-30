@@ -171,3 +171,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypircgit add .
+
+my_log.txt
+.logs/
+/logs/
+/tests/logs/
