@@ -1,9 +1,9 @@
-from src.external_api import convert_currency
+from src.external_api import transaction_amount, convert_currency
 import pytest
 from unittest.mock import patch, MagicMock
 import requests
 import os
-
+from unittest.mock import patch
 
 # Фиктивное значение API_KEY для тестов
 FAKE_API_KEY = os.getenv("API_KEY")
@@ -72,3 +72,74 @@ def test_convert_currency_connection_error(mock_requests_get):
 def mock_requests_get(monkeypatch):
     with patch("src.external_api.requests.get") as mock_get:
         yield mock_get
+
+
+@pytest.fixture
+def mock_convert_currency(monkeypatch):
+    def mock_api(amount, from_currency, to_currency):
+        if from_currency == 'USD' and to_currency == 'RUB':
+            return 70 * amount
+        elif from_currency == 'EUR' and to_currency == 'RUB':
+            return 90 * amount
+        else:
+            return None
+
+    monkeypatch.setattr('src.external_api.convert_currency', mock_api)
+
+
+def test_transaction_rub(mock_convert_currency):
+    # Проверка транзакции в рублях без конвертации
+    transaction = {
+        "operationAmount": {
+            "amount": 1000,
+            "currency": {
+                "code": "RUB"
+            }
+        }
+    }
+    assert transaction_amount(transaction) == 1000
+
+
+def test_transaction_usd_to_rub(mock_convert_currency):
+    # Проверка транзакции в долларах США с конвертацией в рубли
+    transaction = {
+        "operationAmount": {
+            "amount": 1000,
+            "currency": {
+                "code": "USD"
+            }
+        }
+    }
+    assert transaction_amount(transaction) == 70000
+
+
+def test_transaction_eur_to_rub(mock_convert_currency):
+    # Проверка транзакции в евро с конвертацией в рубли
+    transaction = {
+        "operationAmount": {
+            "amount": 500,
+            "currency": {
+                "code": "EUR"
+            }
+        }
+    }
+    assert transaction_amount(transaction) == 45000
+
+
+def test_invalid_currency(mock_convert_currency):
+    # Проверка транзакции с неизвестной валютой
+    transaction = {
+        "operationAmount": {
+            "amount": 1000,
+            "currency": {
+                "code": "XYZ"
+            }
+        }
+    }
+    assert transaction_amount(transaction) == 0
+
+
+def test_missing_fields(mock_convert_currency):
+    # Проверка транзакции с отсутствующими полями
+    transaction = {}
+    assert transaction_amount(transaction) == 0
