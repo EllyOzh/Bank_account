@@ -35,7 +35,10 @@ def log(filename: Optional[str] = None) -> Callable[[Callable], Callable]:
 
                 return result
             except Exception as e:
-                error_message = (f'Ошибка в функции "{func.__name__}". Тип ошибки: {type(e).__name__}. Входные аргументы: args={args}, kwargs={kwargs}')
+                error_message = (
+                    f'Ошибка в функции "{func.__name__}". Тип ошибки: {type(e).__name__}. '
+                    f'Входные аргументы: args={args}, kwargs={kwargs}'
+                )
 
                 if filename:
                     with open(filepath, "a", encoding="utf-8") as file:

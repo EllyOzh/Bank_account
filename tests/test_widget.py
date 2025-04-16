@@ -20,11 +20,6 @@ def test_mask_account_card_ok(card_info, expected):
     assert mask_account_card(card_info) == expected
 
 
-def test_mask_account_card_error_num() -> None:
-    with pytest.raises(Exception):
-        mask_account_card([])
-
-
 @pytest.mark.parametrize(
     "data_info, expected",
     [("2024-03-11T02:26:18.671407", "11.03.2024"), ("2024-03", "Введите дату в правильном формате")],

@@ -9,7 +9,7 @@ def filter_by_state(
 
     new_list_dict = []
     for element in info_client:
-        if element["state"] == state:
+        if "state" in element and element["state"] == state:
             new_list_dict.append(element)
     return new_list_dict
 
