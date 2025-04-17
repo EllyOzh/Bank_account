@@ -21,7 +21,10 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> flo
               to_currency: Целевая валюта
     Возвращает:: Конвертированная сумма
     """
-    url = f"https://api.apilayer.com/exchangerates_data/convert?to={to_currency}&from={from_currency}&amount={amount}"
+    url = (
+        f"https://api.apilayer.com/exchangerates_data/convert?"
+        f"to={to_currency}&from={from_currency}&amount={amount}"
+    )
     headers = {"apikey": API_KEY}
 
     try:
@@ -36,7 +39,10 @@ def convert_currency(amount: float, from_currency: str, to_currency: str) -> flo
                 return None
         else:
             error_message = response.json().get('error', {}).get('message')
-            print(f"Возникла ошибка при обращении к API. Код: {response.status_code}, Сообщение: {error_message}")
+            print(
+                f"Возникла ошибка при обращении к API. "
+                f"Код: {response.status_code}, Сообщение: {error_message}"
+            )
             return None
 
     except requests.exceptions.RequestException as e:
@@ -70,19 +76,20 @@ def transaction_amount(transaction: Dict) -> float:
             print(f"Ошибка конвертации для валюты {currency}")
             return 0.0
 
+
 if __name__ == '__main__':
     print(transaction_amount({
-    "id": 939719570,
-    "state": "EXECUTED",
-    "date": "2018-06-30T02:08:58.425572",
-    "operationAmount": {
-      "amount": "9824.07",
-      "currency": {
-        "name": "USD",
-        "code": "USD"
-      }
-    },
-    "description": "Перевод организации",
-    "from": "Счет 75106830613657916952",
-    "to": "Счет 11776614605963066702"
-  }))
+        "id": 939719570,
+        "state": "EXECUTED",
+        "date": "2018-06-30T02:08:58.425572",
+        "operationAmount": {
+            "amount": "9824.07",
+            "currency": {
+                "name": "USD",
+                "code": "USD"
+            }
+        },
+        "description": "Перевод организации",
+        "from": "Счет 75106830613657916952",
+        "to": "Счет 11776614605963066702"
+    }))

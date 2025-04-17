@@ -5,6 +5,8 @@ from src.masks import get_mask_account, get_mask_card_number
 
 def mask_account_card(number_card_or_account: str) -> str:
     """Функция, возвращающая замаскированный номер карты или счёта"""
+    if not number_card_or_account or len(number_card_or_account) < 4:
+        return number_card_or_account
     info_card_or_account = number_card_or_account.split()
     number = info_card_or_account[-1]
     title = " ".join(info_card_or_account[:-1])
